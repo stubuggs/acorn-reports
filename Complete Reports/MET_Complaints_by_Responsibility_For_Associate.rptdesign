@@ -1,0 +1,2794 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">72</property>
+    <parameters>
+        <scalar-parameter name="from_date" id="265">
+            <property name="valueType">static</property>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var date = new Date();
+date.setMonth(date.getMonth() - 12);
+date.setDate(1);
+date;]]></method>
+            <structure name="format">
+                <property name="category">Short Date</property>
+                <property name="pattern">Short Date</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="to_date" id="266">
+            <property name="valueType">static</property>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <method name="getDefaultValueList"><![CDATA[var date = new Date();
+date.setMonth(date.getMonth() + 1);
+date.setDate(1);
+date;]]></method>
+            <structure name="format">
+                <property name="category">Short Date</property>
+                <property name="pattern">Short Date</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="responsibility" id="302">
+            <property name="valueType">static</property>
+            <property name="sortBy">label</property>
+            <property name="sortDirection">asc</property>
+            <property name="dataType">decimal</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">0</property>
+                    <property name="label">0-100%</property>
+                </structure>
+                <structure>
+                    <property name="value">50</property>
+                    <property name="label">50-100%</property>
+                </structure>
+                <structure>
+                    <property name="value">100</property>
+                    <property name="label">100%</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">false</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="closed?" id="303">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">N</property>
+                    <property name="label">Open</property>
+                </structure>
+                <structure>
+                    <property name="value">Y</property>
+                    <property name="label">Closed</property>
+                </structure>
+                <structure>
+                    <property name="value">X</property>
+                    <property name="label">Both</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="source" id="305">
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">PARAM_SOURCE</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["id"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["name"]</expression>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">multi-value</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="ulysses" id="139">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost:5432/acorn</property>
+            <property name="odaUser">ulysses</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">dWx5c3Nlcw==</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="OPEN_CLOSED" id="252">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">closed_flag</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">closed_flag</text-property>
+                    <text-property name="heading">closed_flag</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">closed_flag</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ulysses</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">closed_flag</property>
+                    <property name="nativeName">closed_flag</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT CASE STATUS.NAME WHEN 'Closed' THEN 'Y' ELSE 'N' END AS CLOSED_FLAG
+  FROM
+       SYS_ACTION LEFT OUTER JOIN SYS_ACTION_STATUS AS STATUS ON STATUS.ID = SYS_ACTION.STATUS_ID
+]]></xml-property>
+            <structure name="designerState">
+                <property name="version">1.0</property>
+                <property name="stateContentAsString">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;SQLQueryBuilder editorInputType="SQLBuilderStorageEditorInput" name="OPEN_CLOSED" version="1.0">
+&lt;SQLStatement>SELECT CASE STATUS.NAME WHEN &amp;apos;Closed&amp;apos; THEN &amp;apos;Y&amp;apos; ELSE &amp;apos;N&amp;apos; END AS CLOSED_FLAG&amp;#x0A;  FROM&amp;#x0A;       SYS_ACTION LEFT OUTER JOIN SYS_ACTION_STATUS AS STATUS ON STATUS.ID = SYS_ACTION.STATUS_ID&amp;#x0A;&lt;/SQLStatement>
+&lt;connInfo>postgres_8.x:Transient.org.eclipse.datatools.enablement.postgresql.connectionProfile:acornlife:ulysses&lt;/connInfo>
+&lt;omitSchemaInfo>false:true:&lt;/omitSchemaInfo>
+&lt;editorInputUsageOptions>useWindowState=true&lt;/editorInputUsageOptions>
+&lt;windowState height="331" version="1.0" width="574">
+&lt;control height="97" isHideable="true" isVisible="true" name="SQLSourceViewer" width="549"/>
+&lt;control height="105" isHideable="true" isVisible="true" name="DesignViewer" width="562"/>
+&lt;control height="97" isHideable="true" isVisible="true" name="GraphControl" width="554"/>
+&lt;control height="97" isHideable="true" isVisible="false" name="OutlineViewer" width="156"/>
+&lt;/windowState>
+&lt;/SQLQueryBuilder></property>
+            </structure>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>closed_flag</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>closed_flag</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>closed_flag</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria>
+        <design:rowOrdering/>
+      </design:criteria>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="PARAM_SOURCE" id="251">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">id</text-property>
+                    <text-property name="heading">id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ulysses</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">id</property>
+                    <property name="nativeName">id</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT ID, NAME
+  FROM SYS_SOURCE
+  WHERE KEY_CODE IN ('WR', 'OR')
+]]></xml-property>
+            <structure name="designerState">
+                <property name="version">1.0</property>
+                <property name="stateContentAsString">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;SQLQueryBuilder editorInputType="SQLBuilderStorageEditorInput" name="PARAM_SOURCE" version="1.0">
+&lt;SQLStatement>SELECT *&amp;#x0A;  FROM &amp;#x0A;&lt;/SQLStatement>
+&lt;connInfo>postgres_8.x:Transient.org.eclipse.datatools.enablement.postgresql.connectionProfile:acornlife:ulysses&lt;/connInfo>
+&lt;omitSchemaInfo>false:true:&lt;/omitSchemaInfo>
+&lt;editorInputUsageOptions>useWindowState=true&lt;/editorInputUsageOptions>
+&lt;windowState height="487" version="1.0" width="683">
+&lt;control height="150" isHideable="true" isVisible="true" name="SQLSourceViewer" width="658"/>
+&lt;control height="155" isHideable="true" isVisible="true" name="DesignViewer" width="671"/>
+&lt;control height="150" isHideable="true" isVisible="true" name="GraphControl" width="663"/>
+&lt;control height="150" isHideable="true" isVisible="false" name="OutlineViewer" width="198"/>
+&lt;/windowState>
+&lt;/SQLQueryBuilder></property>
+            </structure>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria>
+        <design:rowOrdering/>
+      </design:criteria>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="PERCENTAGE" id="253">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">percent</property>
+                    <text-property name="displayName">percent</text-property>
+                    <text-property name="heading">percent</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">percent</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ulysses</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">percent</property>
+                    <property name="nativeName">percent</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT PERCENTAGE / 100.0 AS PERCENT
+  FROM SYS_RESPONSIBILITY
+]]></xml-property>
+            <structure name="designerState">
+                <property name="version">1.0</property>
+                <property name="stateContentAsString">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;SQLQueryBuilder editorInputType="SQLBuilderStorageEditorInput" name="PERCENTAGE" version="1.0">
+&lt;SQLStatement>SELECT *&amp;#x0A;  FROM &amp;#x0A;&lt;/SQLStatement>
+&lt;connInfo>postgres_8.x:Transient.org.eclipse.datatools.enablement.postgresql.connectionProfile:acornlife:ulysses&lt;/connInfo>
+&lt;omitSchemaInfo>false:true:&lt;/omitSchemaInfo>
+&lt;editorInputUsageOptions>useWindowState=true&lt;/editorInputUsageOptions>
+&lt;windowState height="487" version="1.0" width="683">
+&lt;control height="150" isHideable="true" isVisible="true" name="SQLSourceViewer" width="658"/>
+&lt;control height="155" isHideable="true" isVisible="true" name="DesignViewer" width="671"/>
+&lt;control height="150" isHideable="true" isVisible="true" name="GraphControl" width="663"/>
+&lt;control height="150" isHideable="true" isVisible="false" name="OutlineViewer" width="198"/>
+&lt;/windowState>
+&lt;/SQLQueryBuilder></property>
+            </structure>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>percent</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>percent</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>percent</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria>
+        <design:rowOrdering/>
+      </design:criteria>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="RESP" id="140">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">percent</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">percent</text-property>
+                    <text-property name="heading">percent</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">issue_no</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">issue_no</text-property>
+                    <text-property name="heading">issue_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">received_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">received_date</text-property>
+                    <text-property name="heading">received_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">requestor_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">requestor_name</text-property>
+                    <text-property name="heading">requestor_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">root_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">root_name</text-property>
+                    <text-property name="heading">root_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">source</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">source</text-property>
+                    <text-property name="heading">source</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">c_resolution_agreed</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">c_resolution_agreed</text-property>
+                    <text-property name="heading">c_resolution_agreed</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">resolution_agreed</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">resolution_agreed</text-property>
+                    <text-property name="heading">resolution_agreed</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">status</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">status</text-property>
+                    <text-property name="heading">status</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">closed_flag</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">closed_flag</text-property>
+                    <text-property name="heading">closed_flag</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">sub_category</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">sub_category</text-property>
+                    <text-property name="heading">sub_category</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">department</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">department</text-property>
+                    <text-property name="heading">department</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">facility</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">facility</text-property>
+                    <text-property name="heading">facility</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">legal_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">legal_name</text-property>
+                    <text-property name="heading">legal_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">responsible_branch</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">responsible_branch</text-property>
+                    <text-property name="heading">responsible_branch</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">status_1</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">status</text-property>
+                    <text-property name="heading">status</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">complaint_no</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">complaint_no</text-property>
+                    <text-property name="heading">complaint_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">fso_flag</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">fso_flag</text-property>
+                    <text-property name="heading">fso_flag</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">omb_desc</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">omb_desc</text-property>
+                    <text-property name="heading">omb_desc</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">policy_no</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">policy_no</text-property>
+                    <text-property name="heading">policy_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">brief_summary</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">brief_summary</text-property>
+                    <text-property name="heading">brief_summary</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">type_</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">type_</text-property>
+                    <text-property name="heading">type_</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">title</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">title</text-property>
+                    <text-property name="heading">title</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">body</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">body</text-property>
+                    <text-property name="heading">body</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">started_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">started_date</text-property>
+                    <text-property name="heading">started_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">completed_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">completed_date</text-property>
+                    <text-property name="heading">completed_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">active_days</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">active_days</text-property>
+                    <text-property name="heading">active_days</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">open_days</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">open_days</text-property>
+                    <text-property name="heading">open_days</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">assignee_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">assignee_name</text-property>
+                    <text-property name="heading">assignee_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">policy_app_no</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">policy_app_no</text-property>
+                    <text-property name="heading">policy_app_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">description</text-property>
+                    <text-property name="heading">description</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">last_name</text-property>
+                    <text-property name="heading">last_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">upheld_status</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">upheld_status</text-property>
+                    <text-property name="heading">upheld_status</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">parent_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">parent_id</text-property>
+                    <text-property name="heading">parent_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">description_1</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">description</text-property>
+                    <text-property name="heading">description</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">policy_no_1</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">policy_no</text-property>
+                    <text-property name="heading">policy_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">policy_app_no_1</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">policy_app_no</text-property>
+                    <text-property name="heading">policy_app_no</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">source_1</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">source</text-property>
+                    <text-property name="heading">source</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">key_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">key_code</text-property>
+                    <text-property name="heading">key_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">person_responsible</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">person_responsible</text-property>
+                    <text-property name="heading">person_responsible</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">from_date</property>
+                    <property name="paramName">from_date</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">dateTime</property>
+                    <property name="nativeDataType">93</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">to_date</property>
+                    <property name="paramName">to_date</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">dateTime</property>
+                    <property name="nativeDataType">93</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">responsibility</property>
+                    <property name="paramName">responsibility</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">source</property>
+                    <property name="paramName">source</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">4</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">source2</property>
+                    <property name="paramName">source</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">5</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">open_closed</property>
+                    <property name="paramName">closed?</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                    <property name="position">6</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">open_closed2</property>
+                    <property name="paramName">closed?</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                    <property name="position">7</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">percent</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">issue_no</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">received_date</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">requestor_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">root_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">source</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">c_resolution_agreed</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">resolution_agreed</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">closed_flag</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">sub_category</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">department</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">facility</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">legal_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">responsible_branch</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">status_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">complaint_no</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">fso_flag</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">omb_desc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">policy_no</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">brief_summary</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">type_</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">title</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">body</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">started_date</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">completed_date</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">active_days</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">open_days</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">assignee_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">31</property>
+                        <property name="name">policy_app_no</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">32</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">33</property>
+                        <property name="name">last_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">34</property>
+                        <property name="name">upheld_status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">35</property>
+                        <property name="name">parent_id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">36</property>
+                        <property name="name">description_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">37</property>
+                        <property name="name">policy_no_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">38</property>
+                        <property name="name">policy_app_no_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">39</property>
+                        <property name="name">source_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">40</property>
+                        <property name="name">key_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">41</property>
+                        <property name="name">person_responsible</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ulysses</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">percent</property>
+                    <property name="nativeName">percent</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">issue_no</property>
+                    <property name="nativeName">issue_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">received_date</property>
+                    <property name="nativeName">received_date</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">requestor_name</property>
+                    <property name="nativeName">requestor_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">root_name</property>
+                    <property name="nativeName">root_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">source</property>
+                    <property name="nativeName">source</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">c_resolution_agreed</property>
+                    <property name="nativeName">c_resolution_agreed</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">resolution_agreed</property>
+                    <property name="nativeName">resolution_agreed</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">status</property>
+                    <property name="nativeName">status</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">closed_flag</property>
+                    <property name="nativeName">closed_flag</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">sub_category</property>
+                    <property name="nativeName">sub_category</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">department</property>
+                    <property name="nativeName">department</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">facility</property>
+                    <property name="nativeName">facility</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">legal_name</property>
+                    <property name="nativeName">legal_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">responsible_branch</property>
+                    <property name="nativeName">responsible_branch</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">status_1</property>
+                    <property name="nativeName">status</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">complaint_no</property>
+                    <property name="nativeName">complaint_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">fso_flag</property>
+                    <property name="nativeName">fso_flag</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">omb_desc</property>
+                    <property name="nativeName">omb_desc</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">policy_no</property>
+                    <property name="nativeName">policy_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">brief_summary</property>
+                    <property name="nativeName">brief_summary</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">type_</property>
+                    <property name="nativeName">type_</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">title</property>
+                    <property name="nativeName">title</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">body</property>
+                    <property name="nativeName">body</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">started_date</property>
+                    <property name="nativeName">started_date</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">completed_date</property>
+                    <property name="nativeName">completed_date</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">active_days</property>
+                    <property name="nativeName">active_days</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">open_days</property>
+                    <property name="nativeName">open_days</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">29</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">30</property>
+                    <property name="name">assignee_name</property>
+                    <property name="nativeName">assignee_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">31</property>
+                    <property name="name">policy_app_no</property>
+                    <property name="nativeName">policy_app_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">32</property>
+                    <property name="name">description</property>
+                    <property name="nativeName">description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">33</property>
+                    <property name="name">last_name</property>
+                    <property name="nativeName">last_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">34</property>
+                    <property name="name">upheld_status</property>
+                    <property name="nativeName">upheld_status</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">35</property>
+                    <property name="name">parent_id</property>
+                    <property name="nativeName">parent_id</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">36</property>
+                    <property name="name">description_1</property>
+                    <property name="nativeName">description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">37</property>
+                    <property name="name">policy_no_1</property>
+                    <property name="nativeName">policy_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">38</property>
+                    <property name="name">policy_app_no_1</property>
+                    <property name="nativeName">policy_app_no</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">39</property>
+                    <property name="name">source_1</property>
+                    <property name="nativeName">source</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">40</property>
+                    <property name="name">key_code</property>
+                    <property name="nativeName">key_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">41</property>
+                    <property name="name">person_responsible</property>
+                    <property name="nativeName">person_responsible</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT 
+  RESPONSIBILITY.PERCENTAGE / 100.0 AS PERCENT, 
+  ISSUE.ISSUE_NO,
+  SYS_ACTION.LOGGED_DATE AS RECEIVED_DATE, 
+  REQUESTOR.TITLE AS REQUESTOR_NAME,
+  CATEGORY.ROOT_NAME AS ROOT_NAME, 
+  SOURCE.NAME AS SOURCE, 
+  SYS_COMPLAINT.RESOLUTION_AGREED AS C_RESOLUTION_AGREED,
+  ISSUE.RESOLUTION_AGREED, 
+  STATUS.NAME AS STATUS, 
+  CASE STATUS.NAME WHEN 'Closed' THEN 'Y' ELSE 'N' END AS CLOSED_FLAG,
+  CATEGORY.NAME AS SUB_CATEGORY, 
+  RESP_ORGANISATION.LEGAL_NAME AS DEPARTMENT,
+  FACILITY.ROOT_TITLE AS FACILITY, 
+  RESP_ORGANISATION.LEGAL_NAME,
+  SYS_ORGANISATION.LEGAL_NAME AS RESPONSIBLE_BRANCH, 
+  STATUS.NAME AS STATUS,
+  SYS_COMPLAINT.COMPLAINT_NO,
+  CASE when sys_complaint.ombudsman_notified is true then 'Y' else 'N' end AS FSO_FLAG,
+  SYS_COMPLAINT.ACORN_RISK_DESCRIPTION AS OMB_DESC, 
+  POLICY.POLICY_NO AS POLICY_NO,
+  SYS_COMPLAINT.DESCRIPTION AS BRIEF_SUMMARY, 
+  SYS_ACTION.TYPE_,
+  SYS_ACTION.TITLE, SYS_ACTION.BODY, 
+  SYS_ACTION.STARTED_DATE,
+  SYS_ACTION.COMPLETED_DATE, 
+  SYS_ACTION.ACTIVE_DAYS, 
+  SYS_ACTION.OPEN_DAYS,
+  SYS_PRIORITY.NAME, 
+  ASSIGNEE.TITLE AS ASSIGNEE_NAME, 
+  POLICY.POLICY_APP_NO AS POLICY_APP_NO,
+  ISSUE.DESCRIPTION, 
+  ASSURED.LAST_NAME, 
+  SYS_UPHELD_STATUS.NAME AS UPHELD_STATUS,
+  SYS_ACTION.PARENT_ID, 
+  ISSUE.DESCRIPTION, 
+  POLICY.POLICY_NO AS POLICY_NO,
+  POLICY.POLICY_APP_NO AS POLICY_APP_NO,
+  SOURCE.NAME as SOURCE,
+  SOURCE.KEY_CODE,
+  RESPONSIBLE_PERSON.TITLE AS PERSON_RESPONSIBLE
+  FROM
+       SYS_RESPONSIBILITY AS RESPONSIBILITY 
+  LEFT OUTER JOIN SYS_ACTION ON SYS_ACTION.ID = RESPONSIBILITY.ACTION_ID 
+  LEFT OUTER JOIN SYS_ISSUE AS ISSUE ON ISSUE.ID = SYS_ACTION.ID 
+  LEFT OUTER JOIN SYS_ACTION AS ACT_PARENT ON ACT_PARENT.ID = SYS_ACTION.PARENT_ID 
+  LEFT OUTER JOIN SYS_COMPLAINT ON ACT_PARENT.ID = SYS_COMPLAINT.ID 
+  LEFT OUTER JOIN SYS_PRIORITY ON SYS_PRIORITY.ID = SYS_ACTION.PRIORITY_ID 
+  LEFT OUTER JOIN SYS_ORGANISATION ON SYS_ORGANISATION.ID = SYS_ACTION.ORGANISATION_ID 
+  LEFT OUTER JOIN SYS_ACTOR AS ASSIGNEE ON ASSIGNEE.ID = SYS_ACTION.ASSIGNEE_ID 
+  LEFT OUTER JOIN SYS_ACTOR AS REQUESTOR ON REQUESTOR.ID = SYS_ACTION.REQUESTOR_ID 
+  LEFT OUTER JOIN SYS_POLICY AS POLICY ON POLICY.ID = SYS_ACTION.POLICY_ID 
+  LEFT OUTER JOIN SYS_SOURCE AS SOURCE ON SOURCE.ID = SYS_ACTION.SOURCE_ID 
+  LEFT OUTER JOIN SYS_POLICY_INVOLVEMENT AS PI ON PI.POLICY_ID = POLICY.ID
+    AND PI.ROLE_ID = (SELECT SYS_POLICY_ROLE.ID
+                FROM SYS_POLICY_ROLE
+                WHERE KEY_CODE = 'Life 1 Assured') LEFT OUTER JOIN SYS_CONTACT AS ASSURED ON ASSURED.ID = PI.CONTACT_ID LEFT OUTER JOIN SYS_UPHELD_STATUS ON SYS_UPHELD_STATUS.ID = SYS_COMPLAINT.UPHELD_STATUS_ID LEFT OUTER JOIN SYS_ACTION_STATUS AS STATUS ON STATUS.ID = SYS_ACTION.STATUS_ID LEFT OUTER JOIN SV_FLAT_ROOT_CATEGORIES AS CATEGORY ON SYS_ACTION.CATEGORY_ID = CATEGORY.ID LEFT OUTER JOIN SYS_ACTOR AS RESPONSIBLE_PERSON ON RESPONSIBLE_PERSON.ID = RESPONSIBILITY.STAFF_ID LEFT OUTER JOIN SYS_ORGANISATION AS RESP_ORGANISATION ON RESP_ORGANISATION.ID = RESPONSIBILITY.ORGANISATION_ID LEFT OUTER JOIN SV_FLAT_ROOT_ORGANISATIONS AS FACILITY ON RESPONSIBILITY.ORGANISATION_ID = FACILITY.ID
+  WHERE SYS_ACTION.TYPE_ IN ('Complaint', 'OmbudsmanComplaint', 'Issue')
+    AND SYS_ACTION.LOGGED_DATE >= ? AND SYS_ACTION.LOGGED_DATE <= ?
+    AND COALESCE(RESPONSIBILITY.PERCENTAGE, 0) >= ?
+    AND (SOURCE.ID = ? OR SOURCE.PARENT_ID = ?)
+    AND (CASE STATUS.key_Code WHEN 'closed' THEN 'Y' ELSE 'N' END = ? OR 'X' = ?)]]></xml-property>
+            <structure name="designerState">
+                <property name="version">1.0</property>
+                <property name="stateContentAsString">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;SQLQueryBuilder editorInputType="SQLBuilderStorageEditorInput" name="RESP" version="1.0">
+&lt;SQLStatement>SELECT RESPONSIBILITY.PERCENTAGE / 100.0 AS PERCENT, ISSUE.ISSUE_NO,&amp;#x0A;  SYS_ACTION.LOGGED_DATE AS RECEIVED_DATE, REQUESTOR.TITLE AS REQUESTOR_NAME,&amp;#x0A;  CATEGORY.ROOT_NAME AS ROOT_NAME, SOURCE.NAME AS SOURCE, CASE ACT_PARENT.TYPE_ WHEN &amp;apos;Complaint&amp;apos; THEN SYS_COMPLAINT.RESOLUTION_AGREED ELSE SYS_OMBUDSMAN_COMPLAINT.RESOLUTION_AGREED END AS C_RESOLUTION_AGREED,&amp;#x0A;  ISSUE.RESOLUTION_AGREED, STATUS.NAME AS STATUS, CASE STATUS.NAME WHEN &amp;apos;Closed&amp;apos; THEN &amp;apos;Y&amp;apos; ELSE &amp;apos;N&amp;apos; END AS CLOSED_FLAG,&amp;#x0A;  CATEGORY.NAME AS SUB_CATEGORY, RESP_ORGANISATION.LEGAL_NAME AS DEPARTMENT,&amp;#x0A;  FACILITY.ROOT_TITLE AS FACILITY, RESP_ORGANISATION.LEGAL_NAME,&amp;#x0A;  SYS_ORGANISATION.LEGAL_NAME AS RESPONSIBLE_BRANCH, STATUS.NAME AS STATUS,&amp;#x0A;  CASE ACT_PARENT.TYPE_ WHEN &amp;apos;Complaint&amp;apos; THEN SYS_COMPLAINT.COMPLAINT_NO ELSE SYS_OMBUDSMAN_COMPLAINT.COMPLAINT_NO END AS COMPLAINT_NO,&amp;#x0A;  CASE ACT_PARENT.TYPE_ WHEN &amp;apos;Complaint&amp;apos; THEN &amp;apos;N&amp;apos; ELSE &amp;apos;Y&amp;apos; END AS FSO_FLAG,&amp;#x0A;  SYS_OMBUDSMAN_COMPLAINT.DESCRIPTION AS OMB_DESC, POLICY.POLICY_NO AS POLICY_NO,&amp;#x0A;  SYS_COMPLAINT.DESCRIPTION AS BRIEF_SUMMARY, SYS_ACTION.TYPE_,&amp;#x0A;  SYS_ACTION.TITLE, SYS_ACTION.BODY, SYS_ACTION.STARTED_DATE,&amp;#x0A;  SYS_ACTION.COMPLETED_DATE, SYS_ACTION.ACTIVE_DAYS, SYS_ACTION.OPEN_DAYS,&amp;#x0A;  SYS_PRIORITY.NAME, ASSIGNEE.TITLE AS ASSIGNEE_NAME, POLICY.POLICY_APP_NO AS POLICY_APP_NO,&amp;#x0A;  ISSUE.DESCRIPTION, ASSURED.LAST_NAME, SYS_UPHELD_STATUS.NAME AS UPHELD_STATUS,&amp;#x0A;  SYS_ACTION.PARENT_ID, ISSUE.DESCRIPTION, POLICY.POLICY_NO AS POLICY_NO,&amp;#x0A;  POLICY.POLICY_APP_NO AS POLICY_APP_NO&amp;#x0A;  FROM&amp;#x0A;       SYS_RESPONSIBILITY AS RESPONSIBILITY LEFT OUTER JOIN SYS_ACTION ON SYS_ACTION.ID = RESPONSIBILITY.ACTION_ID LEFT OUTER JOIN SYS_ISSUE AS ISSUE ON ISSUE.ID = SYS_ACTION.ID LEFT OUTER JOIN SYS_ACTION AS ACT_PARENT ON ACT_PARENT.ID = SYS_ACTION.PARENT_ID LEFT OUTER JOIN SYS_COMPLAINT ON ACT_PARENT.ID = SYS_COMPLAINT.ID LEFT OUTER JOIN SYS_OMBUDSMAN_COMPLAINT ON ACT_PARENT.ID = SYS_OMBUDSMAN_COMPLAINT.ID LEFT OUTER JOIN SYS_PRIORITY ON SYS_PRIORITY.ID = SYS_ACTION.PRIORITY_ID LEFT OUTER JOIN SYS_ORGANISATION ON SYS_ORGANISATION.ID = SYS_ACTION.ORGANISATION_ID LEFT OUTER JOIN SYS_ACTOR AS ASSIGNEE ON ASSIGNEE.ID = SYS_ACTION.ASSIGNEE_ID LEFT OUTER JOIN SYS_ACTOR AS REQUESTOR ON REQUESTOR.ID = SYS_ACTION.REQUESTOR_ID LEFT OUTER JOIN SYS_POLICY AS POLICY ON POLICY.ID = SYS_ACTION.POLICY_ID LEFT OUTER JOIN SYS_SOURCE AS SOURCE ON SOURCE.ID = SYS_ACTION.SOURCE_ID LEFT OUTER JOIN SYS_POLICY_INVOLVEMENT AS PI ON PI.POLICY_ID = POLICY.ID&amp;#x0A;    AND PI.ROLE_ID = (SELECT SYS_POLICY_ROLE.ID&amp;#x0A;                FROM SYS_POLICY_ROLE&amp;#x0A;                WHERE KEY_CODE = &amp;apos;Life 1 Assured&amp;apos;) LEFT OUTER JOIN SYS_CONTACT AS ASSURED ON ASSURED.ID = PI.CONTACT_ID LEFT OUTER JOIN SYS_UPHELD_STATUS ON SYS_UPHELD_STATUS.ID = SYS_COMPLAINT.UPHELD_STATUS_ID LEFT OUTER JOIN SYS_ACTION_STATUS AS STATUS ON STATUS.ID = SYS_ACTION.STATUS_ID LEFT OUTER JOIN SV_FLAT_ROOT_CATEGORIES AS CATEGORY ON SYS_ACTION.CATEGORY_ID = CATEGORY.ID LEFT OUTER JOIN SYS_ACTOR AS RESPONSIBLE_PERSON ON RESPONSIBLE_PERSON.ID = RESPONSIBILITY.STAFF_ID LEFT OUTER JOIN SYS_ORGANISATION AS RESP_ORGANISATION ON RESP_ORGANISATION.ID = RESPONSIBILITY.ORGANISATION_ID LEFT OUTER JOIN SV_FLAT_ROOT_ORGANISATIONS AS FACILITY ON RESPONSIBILITY.ORGANISATION_ID = FACILITY.ID&amp;#x0A;  WHERE SYS_ACTION.TYPE_ IN (&amp;apos;Complaint&amp;apos;, &amp;apos;OmbudsmanComplaint&amp;apos;, &amp;apos;Issue&amp;apos;)&amp;#x0A;    AND SYS_ACTION.LOGGED_DATE &amp;gt;= ? AND SYS_ACTION.LOGGED_DATE &amp;lt;= ?&amp;#x0A;    AND COALESCE(RESPONSIBILITY.PERCENTAGE, 0) &amp;gt;= ?&amp;#x0A;&lt;/SQLStatement>
+&lt;connInfo>postgres_8.x:Transient.org.eclipse.datatools.enablement.postgresql.connectionProfile:acornlife:ulysses&lt;/connInfo>
+&lt;omitSchemaInfo>false:true:&lt;/omitSchemaInfo>
+&lt;editorInputUsageOptions>useWindowState=true&lt;/editorInputUsageOptions>
+&lt;windowState height="605" version="1.0" width="574">
+&lt;control height="300" isHideable="true" isVisible="true" name="SQLSourceViewer" width="549"/>
+&lt;control height="269" isHideable="true" isVisible="true" name="DesignViewer" width="562"/>
+&lt;control height="4" isHideable="true" isVisible="true" name="GraphControl" width="0"/>
+&lt;control height="4" isHideable="true" isVisible="true" name="OutlineViewer" width="552"/>
+&lt;/windowState>
+&lt;/SQLQueryBuilder></property>
+            </structure>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>percentage</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>percentage</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>percentage</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>issue_no</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>issue_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>issue_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>received_date</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>29</design:precision>
+            <design:scale>6</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>received_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>received_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>29</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>requestor_name</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>requestor_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>requestor_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>source</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>source</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>source</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>resolution_agreed</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>resolution_agreed</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>resolution_agreed</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>status</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>status</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>status</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>closed_flag</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>closed_flag</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>closed_flag</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>sub_category</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>sub_category</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>sub_category</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>legal_name</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>legal_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>legal_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>responsible_branch</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>responsible_branch</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>responsible_branch</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>status</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>status</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>status</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>complaint_no</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>100</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>complaint_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>complaint_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>100</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>fso_flag</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>fso_flag</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>fso_flag</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>omb_desc</design:name>
+              <design:position>16</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>omb_desc</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>omb_desc</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>policy_no</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>20</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>policy_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>policy_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>brief_summary</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>brief_summary</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>brief_summary</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>type_</design:name>
+              <design:position>19</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>type_</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>type_</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>title</design:name>
+              <design:position>20</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>title</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>title</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>body</design:name>
+              <design:position>21</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>body</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>body</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>started_date</design:name>
+              <design:position>22</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>29</design:precision>
+            <design:scale>6</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>started_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>started_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>29</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>completed_date</design:name>
+              <design:position>23</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>29</design:precision>
+            <design:scale>6</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>completed_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>completed_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>29</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>active_days</design:name>
+              <design:position>24</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>active_days</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>active_days</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>open_days</design:name>
+              <design:position>25</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>open_days</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>open_days</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>26</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>assignee_name</design:name>
+              <design:position>27</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>assignee_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>assignee_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>policy_app_no</design:name>
+              <design:position>28</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>20</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>policy_app_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>policy_app_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>description</design:name>
+              <design:position>29</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>description</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>description</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>last_name</design:name>
+              <design:position>30</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>last_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>last_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>upheld_status</design:name>
+              <design:position>31</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>upheld_status</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>upheld_status</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>parent_id</design:name>
+              <design:position>32</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>32</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>parent_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>parent_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>32</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>description</design:name>
+              <design:position>33</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>description</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>description</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>policy_no</design:name>
+              <design:position>34</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>20</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>policy_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>policy_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>policy_app_no</design:name>
+              <design:position>35</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>20</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>policy_app_no</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>policy_app_no</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>legal_name</design:name>
+              <design:position>36</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>120</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>legal_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>legal_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>120</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria>
+        <design:rowOrdering/>
+      </design:criteria>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>parameterMetaData</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">landscape</property>
+            <property name="rightMargin">0in</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="284">
+            <column id="285">
+                <property name="width">6.041666666666667in</property>
+            </column>
+            <column id="286">
+                <property name="width">1.1527777777777777in</property>
+            </column>
+            <column id="287"/>
+            <row id="288">
+                <cell id="289">
+                    <label id="293">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">Complaints / Issues by Responsibility by Person Responsible</text-property>
+                    </label>
+                    <label id="295">
+                        <text-property name="text">  </text-property>
+                    </label>
+                    <text id="294">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="contentType">html</property>
+                        <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                    </text>
+                </cell>
+                <cell id="290"/>
+                <cell id="291">
+                    <property name="textAlign">right</property>
+                    <image id="292">
+                        <property name="height">55px</property>
+                        <property name="width">103px</property>
+                        <property name="source">embed</property>
+                        <property name="imageName">acorn.jpeg</property>
+                    </image>
+                </cell>
+            </row>
+        </grid>
+        <table id="18">
+            <property name="dataSet">RESP</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">facility</property>
+                    <text-property name="displayName">facility</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["facility"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">department</property>
+                    <text-property name="displayName">department</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["department"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">assignee_name</property>
+                    <text-property name="displayName">assignee_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assignee_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">percent</property>
+                    <text-property name="displayName">percent</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["percent"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">received_date</property>
+                    <text-property name="displayName">received_date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["received_date"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">complaint_no</property>
+                    <text-property name="displayName">complaint_no</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["complaint_no"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">source</property>
+                    <text-property name="displayName">source</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["source"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">policy_no</property>
+                    <text-property name="displayName">policy_no</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["policy_no"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">closed_flag</property>
+                    <text-property name="displayName">closed_flag</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["closed_flag"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">c_resolution_agreed</property>
+                    <text-property name="displayName">c_resolution_agreed</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["c_resolution_agreed"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">issue_no</property>
+                    <text-property name="displayName">issue_no</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["issue_no"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">requestor_name</property>
+                    <text-property name="displayName">requestor_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["requestor_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">root_name</property>
+                    <text-property name="displayName">root_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["root_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">resolution_agreed</property>
+                    <text-property name="displayName">resolution_agreed</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["resolution_agreed"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">status</property>
+                    <text-property name="displayName">status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">sub_category</property>
+                    <text-property name="displayName">sub_category</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["sub_category"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">legal_name</property>
+                    <text-property name="displayName">legal_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["legal_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">responsible_branch</property>
+                    <text-property name="displayName">responsible_branch</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["responsible_branch"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">status_1</property>
+                    <text-property name="displayName">status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["status_1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">fso_flag</property>
+                    <text-property name="displayName">fso_flag</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fso_flag"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">omb_desc</property>
+                    <text-property name="displayName">omb_desc</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["omb_desc"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">brief_summary</property>
+                    <text-property name="displayName">brief_summary</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["brief_summary"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">type_</property>
+                    <text-property name="displayName">type_</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["type_"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">title</property>
+                    <text-property name="displayName">title</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["title"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">body</property>
+                    <text-property name="displayName">body</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["body"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">started_date</property>
+                    <text-property name="displayName">started_date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["started_date"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">completed_date</property>
+                    <text-property name="displayName">completed_date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["completed_date"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">active_days</property>
+                    <text-property name="displayName">active_days</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["active_days"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">open_days</property>
+                    <text-property name="displayName">open_days</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["open_days"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">name</property>
+                    <text-property name="displayName">name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">policy_app_no</property>
+                    <text-property name="displayName">policy_app_no</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["policy_app_no"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">last_name</property>
+                    <text-property name="displayName">last_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["last_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">upheld_status</property>
+                    <text-property name="displayName">upheld_status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["upheld_status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">parent_id</property>
+                    <text-property name="displayName">parent_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["parent_id"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description_1</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description_1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">policy_no_1</property>
+                    <text-property name="displayName">policy_no</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["policy_no_1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">policy_app_no_1</property>
+                    <text-property name="displayName">policy_app_no</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["policy_app_no_1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">person_responsible</property>
+                    <text-property name="displayName">person_responsible</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["person_responsible"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="68"/>
+            <column id="69"/>
+            <column id="70"/>
+            <column id="71"/>
+            <column id="72"/>
+            <column id="73"/>
+            <column id="74"/>
+            <column id="75"/>
+            <column id="76"/>
+            <column id="77"/>
+            <column id="92"/>
+            <header>
+                <row id="19">
+                    <property name="fontWeight">bold</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <property name="textAlign">left</property>
+                    <cell id="21">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="78">
+                            <text-property name="text">Facility</text-property>
+                        </label>
+                    </cell>
+                    <cell id="22">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="79">
+                            <text-property name="text">Department</text-property>
+                        </label>
+                    </cell>
+                    <cell id="23">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="80">
+                            <text-property name="text">Person Responsible</text-property>
+                        </label>
+                    </cell>
+                    <cell id="24">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="81">
+                            <text-property name="text">% Resp</text-property>
+                        </label>
+                    </cell>
+                    <cell id="25">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="82">
+                            <text-property name="text">Complaint Category</text-property>
+                        </label>
+                    </cell>
+                    <cell id="26">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="83">
+                            <text-property name="text">Complaint Received</text-property>
+                        </label>
+                    </cell>
+                    <cell id="27">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="84">
+                            <text-property name="text">Ref No.</text-property>
+                        </label>
+                    </cell>
+                    <cell id="28">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="86">
+                            <text-property name="text">Source</text-property>
+                        </label>
+                    </cell>
+                    <cell id="29">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="85">
+                            <text-property name="text">Policy</text-property>
+                        </label>
+                    </cell>
+                    <cell id="30">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="87">
+                            <text-property name="text">Closed</text-property>
+                        </label>
+                    </cell>
+                    <cell id="88">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <label id="93">
+                            <text-property name="text">Resolved By</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="31">
+                    <property name="textAlign">left</property>
+                    <cell id="33">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="254">
+                            <property name="fontWeight">bold</property>
+                            <property name="resultSetColumn">facility</property>
+                        </data>
+                    </cell>
+                    <cell id="34">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="255">
+                            <property name="resultSetColumn">department</property>
+                        </data>
+                    </cell>
+                    <cell id="35">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="304">
+                            <property name="fontWeight">bold</property>
+                            <property name="color">#7F0000</property>
+                            <property name="resultSetColumn">person_responsible</property>
+                        </data>
+                    </cell>
+                    <cell id="36">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="257">
+                            <structure name="numberFormat">
+                                <property name="category">Percent</property>
+                                <property name="pattern">###0%{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">percent</property>
+                        </data>
+                    </cell>
+                    <cell id="37">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <grid id="267">
+                            <property name="display">inline</property>
+                            <column id="268"/>
+                            <column id="297"/>
+                            <column id="269"/>
+                            <column id="299"/>
+                            <column id="270"/>
+                            <row id="271">
+                                <cell id="272">
+                                    <data id="275">
+                                        <property name="fontWeight">normal</property>
+                                        <property name="resultSetColumn">root_name</property>
+                                    </data>
+                                </cell>
+                                <cell id="296">
+                                    <text id="300">
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[-]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="273">
+                                    <data id="276">
+                                        <property name="resultSetColumn">sub_category</property>
+                                    </data>
+                                </cell>
+                                <cell id="298">
+                                    <text id="301">
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[-]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="274">
+                                    <data id="277">
+                                        <property name="resultSetColumn">brief_summary</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </grid>
+                    </cell>
+                    <cell id="38">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="258">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="resultSetColumn">received_date</property>
+                        </data>
+                    </cell>
+                    <cell id="39">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="259">
+                            <property name="resultSetColumn">complaint_no</property>
+                        </data>
+                    </cell>
+                    <cell id="40">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="260">
+                            <property name="resultSetColumn">source</property>
+                        </data>
+                    </cell>
+                    <cell id="41">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="261">
+                            <property name="resultSetColumn">policy_no</property>
+                        </data>
+                    </cell>
+                    <cell id="42">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="262">
+                            <property name="resultSetColumn">closed_flag</property>
+                        </data>
+                    </cell>
+                    <cell id="89">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                        <data id="263">
+                            <property name="resultSetColumn">c_resolution_agreed</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="43">
+                    <cell id="45">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="46">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="47">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="48">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="49">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="50">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="51">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="52">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="53">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="54">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="90">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="55">
+                    <cell id="57">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="58">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="59">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="60">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="61">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="62">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="63">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="64">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="65">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="66">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                    <cell id="91">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">x-small</property>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+    </body>
+    <list-property name="images">
+        <structure>
+            <property name="name">acorn.jpeg</property>
+            <property name="type">image/jpeg</property>
+            <property name="data">
+                /9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEhUSEhMTFRUVFRcVGRUXEhMWFRUTFxUXGBYZFxUZ
+                HCggGBomGxgVITEiJSkrLi4uGB8zODMsNygtLisBCgoKDg0OGxAQGy8mICYyLS8tLy0rNTAtLy0vMDUt
+                Ny0tLS0tLS0tLy01LSstMC0tLS0vLS8tLS0tLS0tNS0tLf/AABEIAK4BIgMBEQACEQEDEQH/xAAcAAEA
+                AgIDAQAAAAAAAAAAAAAABQcEBgECAwj/xABMEAACAQIDBAYECAoGCwAAAAAAAQIDEQQFEgYHITETQVFh
+                cYEiMpGhFHJ0gpKxs8EzNDVCUlNic7LCCBcjouHwFSRDY4OTo9HS0+L/xAAbAQEAAgMBAQAAAAAAAAAA
+                AAAABAUCAwYBB//EADkRAQACAQIDAwoFAwQDAQAAAAABAgMEEQUhMRJRcRMyQWGBkaGxwfAGFCIz0TRS
+                4RVTgvEjYnJC/9oADAMBAAIRAxEAPwC8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAABo287bieVRoqjGnOpVlJtTUmlTiuL9FrjqlH2MsOH6L8zM9qdoju72rLk7ENC/r
+                qx/6jC+yr/5ln/ouL+6fg0/mZ7m67sdvquaVK1KvClCVOMJx0avSi3JTvqb5PR7Su4hoa6aK2rMzE97b
+                iydtYJWtwAAAAAAAAAAAAAAAAAAAEVnWaSoNKMU203xb4W7im4rxK2jmsVrvvumaXTRm3mZ22SkHdFxX
+                ohy5PRH5tmXQKL06tV+u1rFbxLiH5OsW7O+/rSdNp/LTMb7bMvDVdcIy5Xinbsurk3DfymOt59MRPvho
+                vG1phH59mMqMUoetK/HsS+/iis4vr7aWkVp50+nujvStHp4y23t0j4vDB4DEtxnOq+abjqly7H1eRG0u
+                g1s3rly5Z6xMxvPu7vYzyajDtNa19vL/ALTh0KAAAAAAAAAcMSPm7exnHwrMqtneFC1CPHheF+k/vuS+
+                ajrOGYvJaeJnrPNBz23sh8fkU6WCw2Md7YipWh3LQ4qHnK1X6KN9M8WzXxd0R9/JjbHtSLJPdbmnwbM8
+                O27Rqt0JeFThH++oGriWLymnt3xz9zLBba2z6WucinFwIfNtqsBhHpxGJo05foua1fRV37jdi0+XLzpW
+                ZeTaIYWG3gZTUemOMo3/AGpOHvmkjbbQ6ivWk/P5PO3VsVKtGaUotSi+Kaaaa7miJPLqyd7gY2Y5jRw9
+                N1a0404R5yk0kv8AHuMqUte3ZrG8vN4aHjt8eWQk4wjiaqX50KcFHy6ScX7iypwjUWjedo8Z/jdqnPSG
+                Zlm9fK67jG9aE5zjCMJ0ndynJRXpRbild9prycL1GPeZiNo9MSyjLWW83K9seVfEwprVOUYLtlJRXtbE
+                RMztBPJh4XPsJVjUnTr0pQpcJzjUi4Qdr+lK9lwNlsWSsxE1nn0ebww8q2zy7FVOhoYmlOpxtBNpytz0
+                3S1eRsyaXNjr2r1mIeRaJS2KxtKktVScILtlKMV7WzRWJt0jdkxMHn+ErU51adelOnTemdRVI6IuyfGd
+                7cmvaZ3w5KT2bVmJ8Hm8It7wsoUtHw2jflzen6dtPvN/5DU7b9ifc87de9sVDEQqRU4SUoyV1KLTi11N
+                NcyJMTE7SyelwNb2r9aPxX9Zyn4k8/H7foteG9LeMNig+C8Dqa9IVTtcyHhia1ONnPSuy9vOxozZMNNr
+                ZZiPFnSt7cq83Z4iKjrv6NtV+q3aZTmx1p5Tf9PXf1d7yKzNuzHVrefYqFScXCSklHmu25yXGdVizZ6T
+                jtvER9VvosVqUtFoTtDMqMmoxmm3yS8L/wDc6bHrtNktFKXiZlV20+Wsdq1doZjZMamDWzihF2c/Ym/e
+                ivy8U0mOdrXjf1c/kkU0uW/OKvTD5jSqO0JJvs5P2M24Ndp887Y7RM/H4sMmDJj52hlktqAAAABF7S5q
+                sHha2Il/sqcpLvla0F5ycV5m3BjnLlrSPTLyZ2jd8qpVKs+uVScvOVSb++T952v6aV9UfKFb51l77xtn
+                I08jjRhxeDjSkn8RKFR+cZTZzGg1MzrO1P8A+t/v3xCdlp+jZQ1OrKDU4O0otSi+yUWnF+1I6i1e1E1n
+                0oFZ2nd9aZPjo4ihSrx5VacKi8JRT+84fJSaXms+iZhZxO8K23w7c1MM1gsNJxqSjqq1Iu0qcJerCLXq
+                ya4t80rW53VrwvQxl/8ALfp6I72jPk7PKFOZbl9fFVVSowlUqzb4Li2+bbb5drbZ0GTJTHTtXnaI+/uE
+                SIm8tsxe6rN6cNfRU52V3CFVSn5JpJvuTINeLaa89mZmPGOTdOnsuzYHBOhl2EpuLjJUIOUWrNTktUk1
+                1O7ZzurvF897R3yl16JnHYuFGnOrN2jCLlJ8/Rirvh1+BorWbWiI6sle4jYjE5vUWJzGrUpU+dLB02r0
+                oPk6k3ddI1zsuu1+FizpraaWvYwRvPptPp8I7mqadrznpidzeWSjaEsRB/pKqpe6UWI4xqInntPseTgp
+                Kqd4myyyzFdDHXKlOmpQnJpuXVNNpJXUuq3Jou+H6udRjm09d9p+/gjZcfYnkt/c9tFUxuCcKrcqmHl0
+                bk3eU4aU4Slfr5x79Fyh4np4w5t69J5pWG3aqp3eW9WaYu/G1WyvxstEeC7EdBw+NtNTbuRs0z2kRDM6
+                iwzwqdqc6yqySvecoxUYp9sVxdu3wRu8lE5PKT1228PT8WEWns9mFhbish6WvUxsknCgujhwverNek0/
+                2YcP+IVXGc/ZpGKJ6858I/z8m/T057tL2645jjG+NsTVSv2a3ZeCLHRctPTbuhpzTPal0yTI8fjoulhq
+                VWrCE9bipJU4zcUrvU1HW4pLtsj3NnwYLdq8xEz79vYUre0bR0R+PwVXD1JUq0JU6kHaUJLinwa7rWaa
+                a4WaNuPJXJWL0neJa7Vms7StLcJnM+krYNtuGjp4Lqi1KMZ27L64u3cyl4zgjauWOvSfp8kvT3md4XQU
+                CS1rav1o/Ff1nKfiTz8ft+cLXhvS3jDY4cl4I6mvmwqnYyEDtVyp+MvqRzX4k/bp4z8llw7zrJLD0Izo
+                xjJXThG/FrqXYXOHFXLpa0vziaxv7oQ72muWbR13lAZ5hIUpxjBWTjd8W+t95y3F9HhwZ6VxxtE/ys9H
+                lvkpM2lO4fLKUGpRjZrk9Unz4Pg2dNh4bpsN+3Sm0/frVl9RkvG1p5I/Na8q1VYeDsvzn5X49yVvN2K3
+                iGfJqdRGixTt/dP33fGeSVp6VxY/LW9nySGGyqjBW0Rk+2STbfny8ixwcL0uKu3YifXMbyjZNTlvO8z7
+                mJmuUQcXKmlGUVdKPBO3Hl1PsZC4hwnFak5MMdm0c+XLf1fw3afV2iezed4nlO7IyPGOrTvL1ovS328O
+                D9hK4TrJ1OCLW6xyn+WvV4fJZNo6JEs0YAAAKt385xow9LCRfGtPXJf7unxXtm4P5rLjg2HtZZyT6OXt
+                lo1Ftq7KcyTMPg2IpV9EajpTU1CTtFyj6t2ux2fkX+bH5THNN9t/v4/JEpbszu3zMd8GIr0qlGeEoaKk
+                JU5f2lT1ZxcX7mVlODUpaLVvO8eruSJ1G8bbK2sXCI+gtyeadNlypv1qFWdPxi7VIvwtNr5pyvF8fYzz
+                bvjf6LDBO9IUztzipVsxxc5c/hFSHlTk6cfdFHQ6KnZ09Ijuj48/rKHlne8rI3AZfDRisQ0nPVGin1qC
+                ipyt4tx+iin41eZtSno6/T6JGmjlut4pEl44qtoi5PqTfjbqNWbJGLHN59Eff8MqVm1orHpKlBTilNJ8
+                Yu3Vqi1JexpPyNlZmGMw9j0AKs3/AGHi8NhqnDVGu4J9emdOTkvbCL8i54LaYy2j1I+o81g/0e6cv9dn
+                +a+gin+0ulb90o+028bmN6R4/T+HmmjlLQd5H5Uxn77+SJZ6D+mp4NOfz1hbgMBTcMTXcU6inGkpNcYw
+                0KTSfVdvj4IquNXntVp6Nt2/Tx+ndbNOjGF9MYx1PU7JK8nzbtzfBcSjnmkPlzbj8o4z5TV/jZ2ej/p6
+                eEK/N58rY3A/ieI+Uv7GkUnGo/8ALXw+spOn81qm/mlFY+lJLjLDRu+21Sol7ibwWZ8jaPX9IatT1h5b
+                i/ylL5LV+0onvGf2I8foabrK/wC5zKY1raz1ofFl9Zyn4k8/H4T84WvDelvGGx0+S8Dqa9IVTsZCB2r5
+                U/F/cc1+I/26eM/JZcO863sS2X/gofEj/Ci90n7FPCPlCDl8+3jKD2n/AAkPi/zM53j39Rj8PqsuH/t2
+                +/Q2KJ1Sparg6lbpqkqUVKV5Xv1Jy8V2I4zS5NT+by5MFYmd5337t/GFxkri8jSuSdo/x4SkfhOO/Vw/
+                z88tfzHFv9uv3/yRuxpP7p+/+J8Jx36uHs/+x+Y4t/tV+/8AkdjSf3T9+x22ewdSlr1xtfTbinyvfl5D
+                gekz6aLxljbfbb47/R5rc2PJ2ZpPemS+QQABwzyR82b1s4+FZlWs7wo2oR7PQ9f/AKjn7EddwzD5PT17
+                55+//GyDntvbZMbsd31DM6NWtiJVoKNTo4dHKEb2inJvVCV/WiuHYyPxHiF9PeKUiOnP73Z4sMWrvLc/
+                6lst/XYz/mUf/UV/+s5+6Pj/AC2fl6Kj24yKOX42rhouThHS4OTTk4SgndtJK99S5LkXui1E58Nck9fr
+                97I2WnYts2/cRmnR4urh2+Fanqiv26Tvw79MpfRIHGsXaxRfun5tumt6Gt7zcqlhcyxEWrRqT6eD6pRq
+                +k2vn64/NJfDs0ZNPXvjl7v8Neeu10/ua2so4KrVw+ImoU6+mUZy4RjVjdWk+pSTXF8PR7yLxbS3y1jJ
+                SN5jr4f9/P3bNPeI/TK8KmY0Yw6SVWmoJX1upFRt26m7HOxS0ztEc0uZRma5jTq4aFSlLVCo04yV7Sir
+                u6v1ejz60UvHslsODaY59qIn2c/omaCsWyexNwndJrk1f28i2raLRvCHttydjIAKX39Zup1MPg4u7hqr
+                TSu3ql6NJeNukdu9ed9wXFtW2WfCPv3fFG1Ft9qw3zdhs5LL8DCFRWq1G6tRdcZSSSj82KivG5XcQ1Hl
+                882jpHKPv1823HTs12UbvH/KmM/ffyROk0H9NTw+qJn89Zf9H/8AFsT+/X2USn41+7Xw+qRp/NWmUst7
+                5Z24/KOM+U1f42dpo/6enhCvzefK2NwX4niPlL+xpFJxr92vh9ZSdP5rV9/f49R+TL7WoTOC/s28fpDX
+                qesMbcX+UpfJqv2lEz4z+xH/ANfR5pusr/OYTGt7V+tH4r+s5T8Sefj8J+i14b0t4w2KHJeCOpr0hVOx
+                kILanlT8ZfUc1+I/26eM/JZcO86yVy/8FD4kf4UXuk/Yp4R8oQMvn28ZQe034SHxf5mc7x7+ox+H1WWg
+                /bt9+hsaOqVTXcLNUMVKMuCm3x6vSeqL+45bTWjScSvS3KLdPbzj2ehaZK+W01Zj0NiOo5Sq3NhscnEW
+                B2PQAAYmbVqkKFWVKDqVIwk4QVrymk9Ku++xnSItaImdoeS+cJbvs5k25YOq2223ro3bbu36/bc6yOIa
+                WI2i/L2/whThvM7r23d5LLBZfQozjpqWc5p2uqlSTm02uDtdR8jmtbmjNnteOno+SXSvZrs2Qis1R74t
+                jsXi8TSr4WjKrek4T0ygrOE24N6pLmpy+iXfCtZjxUtTJO3PeEfNjm3OGr7I7H5vhMbh8Q8HUUadWLk9
+                VF/2crxqfn89MpEzVazTZcNqRfrHdPXr3d8Q148V623W3t5sXRzWkoyeitC7p1Ur2vzjJfnQfDh1Wuu+
+                j0esvpr7xziesJN8cXjZSGbbus1w7aeGlUivz6LVSLXcl6S84o6PFxLT3jztvVP3t8UOcFoRlDY/Majt
+                DBYi/fQnBX8ZJI3W1mCvW8e/f5EY7z1fQuJy/oMDh6VvwMKcGuzTT0/WfMvxJvlxTk/9t/fv/K84fPZy
+                bepk5BmKaVKT4rhFt812eKI3BeI0vSMF5/VHT1x3ez5M9bp5raclek9fUnEdEr0DtFtDKgnTw9GpicQ1
+                6NKEXpi7cHVqerTj4tN9Xdvw4YvO9rRFe+fpHWWMzt0anshsFKniPh+ZTVbFzm5xpp3hCf6T/ScVay9W
+                KStd2ala3idIpGDDyr09c9/s9M9/q6TjTFPO09fkspFc2KC242HzOvmGJrUsLOdOdVuMlKkk1piuTkn1
+                HTaPXaemCtbW2mI9aJlxWtbeG97mshxWCoV4YmlKlKdVSim4u8ejir+i31orOKajHmyVnHO/Jtw1msbS
+                sJorG5897WbCZrWxuKq08JOUJ16koyU6SUoubafGd/adRpddp6YaVtbnER6JQ8mK023hY25zI8VgsLWh
+                iaUqUpV3NJuLvHoqav6La5plVxTPjzZKzjnfaPrLfhrNa7S1/fFstjsbi6VTDYedWEaCg5KVNJS6Sba9
+                KS6mvaSeFarDhxWre23P6QwzY5tPJ4bo9k8fg8e6uIw86cHQqR1OUGtTnTaXoyfVFmXE9Xhy4YrS287/
+                AEeYcdqzzXLYoUlB7Q4OpUlHRFySTT4r72c7xzSZtRak4677brDQ5qY4ntTt0eGvH9j+jSNHleM+iPhV
+                nto+/wCZ0mYdj+jTEZeM93wqdnRd/wA2TnmEqVI01FOTV78udl/iSeM6XPnxUrWO1Mdfc1aPNjx2tNp2
+                j0JTBRapwT4NQin3NJFzpqzXDWtuu0fJEyTveZj1ojP8HVqTi4RbSjzVu19pS8Y0ebNnpbHXeI/lO0eb
+                HjpMWnZOJHQq5gZtlirLhwkuT6rdj7vqKziPDq6usbcrR0n6Sk6fUTin1I+liMZR9Fwc0uT5u3V6S5+f
+                ErMeo4lpY7F8fbjv6/GPrCTammy84tt9+t3+GYypwhT0d7XL6XD3M2TreJZv048XZ9c/5/hj5HTU52tv
+                9+r/AAk8sw0qcLSeqTbbd27tvtfkW2hwZMOLs5J3t1mfXKJmvF771jaGWTGoAAAA2AAAGw4PNhyegebA
+                Nh4YunGcHGXJp36rLtv1cjVqMdMuO1L9Jj79zPHaa2ia9WmVaLjx5xu0p2dpWfNHz3Np7Y/1V513mItH
+                Sdu50FMkW5T17mXhc4rQ4alJftK/v5k/T8a1WKNpntePX+UfJo8Vp7vBl0c2xNZ6acY37bPh5vgifi4p
+                rdXPYw0iPXz5e9ovpcGKN7ymMDgtHGTc5vnJ+N7LsRfaTS+S/Vee1eesz8o7o9SBly9vlEbR3ffpZhMa
+                g82Cx7sAA82A9CwAABxYBYBYBY82gcno4sBygAHFhsFgOQAAAAAAAAAAAAAAMHMcuVbTecklzinwl2cO
+                3vIGt0Earsxa0xEdYjpP+fW34c/kt9o5/Jkww8FHQorTa1rcLeBKrhpWnk4j9PTZqm0zPa35vD/RdC9+
+                jh7PuI3+m6Tffyce5s/M5enan3sqFNRVkkl2JWXsJlaVpEVrG0epqmZmd5djJ4AAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//2Q==
+</property>
+        </structure>
+    </list-property>
+</report>
